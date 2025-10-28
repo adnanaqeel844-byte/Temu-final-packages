@@ -1,47 +1,58 @@
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Temu Exclusive Deals</title>
-<style>
-body { font-family: Arial,sans-serif; margin:20px; }
-.item { margin-bottom:20px; }
-.item img { width:100%; border-radius:8px; }
-.btn { display:inline-block; padding:10px 16px; background:#ff6600; color:#fff; text-decoration:none; border-radius:6px; }
-</style>
-</head>
-<body>
-<h1>🔥 Temu Exclusive Deals 🔥</h1>
-<div id="productContainer"></div>
-<script>
-const TELEGRAM_BOT_TOKEN = '8061928370:AAHkHM6Ur0jUSj4iU7xY_P9H9mRT117ngyg';
-const TELEGRAM_CHAT_ID = '1003025462126';
-
-async function loadProducts(){
-  const res = await fetch('products.json');
-  const products = await res.json();
-  const container = document.getElementById('productContainer');
-  products.forEach(p=>{
-    const div = document.createElement('div');
-    div.className = 'item';
-    div.innerHTML = `
-      <img src="${p.img}" alt="${p.title}">
-      <h3>${p.title}</h3>
-      <p>${p.price}</p>
-      ${p.adImg ? '<img src="'+p.adImg+'" alt="Ad" style="margin-top:5px;">' : ''}
-      <a href="${p.link}" target="_blank" class="btn" onclick="sendTelegram('${p.title}')">Shop Now</a>
-    `;
-    container.appendChild(div);
-  });
-}
-
-function sendTelegram(productTitle){
-  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=User clicked on ${encodeURIComponent(productTitle)}`);
-}
-
-window.onload = loadProducts;
-</script>
-</body>
+<!DOCTYPE html>  <html lang="en">  
+<head>  
+  <meta charset="UTF-8">  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+  <title>Temu Exclusive Deals</title>  
+  <style>  
+    body {  
+      font-family: Arial, sans-serif;  
+      background: #f9f9f9;  
+      margin: 0;  
+      padding: 20px;  
+      color: #222;  
+    }  
+    .product {  
+      background: #fff;  
+      border: 1px solid #ddd;  
+      border-radius: 12px;  
+      padding: 15px;  
+      margin-bottom: 15px;  
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);  
+    }  
+    .product a {  
+      text-decoration: none;  
+      color: #007bff;  
+    }  
+    .product a:hover {  
+      text-decoration: underline;  
+    }  
+  </style>  
+</head>  
+<body>  <h1>🔥 Temu Exclusive Deals 🔥</h1>  <div class="product">  
+  <h2>Men's Slim-Fit Casual Jacket 🇮🇹</h2>  
+  <p>Beige zip-up bomber with Italian flag & “Italia” print. Perfect for Fall/Winter.</p>  
+  <p><a href="https://temu.to/k/erouery6gun" target="_blank">👉 View Deal</a></p>  
+  <p>💰 AED 4.06 (price may vary)</p>  
+</div>  <div class="product">  
+  <h2>Men's Professional Basketball Shoes</h2>  
+  <p>High-top, breathable, non-slip sneakers for training and walking.</p>  
+  <p><a href="https://temu.to/k/e6pkeg1mddb" target="_blank">👉 View Deal</a></p>  
+  <p>💰 AED 4.38 (price may vary)</p>  
+</div>  <div class="product">  
+  <h2>Samsung Compatible Case</h2>  
+  <p>Compatible with Note 10/20, S9, S10, S10E+ Plus, Lite, Ultra.</p>  
+  <p><a href="https://temu.to/k/efhxo9a9ab7" target="_blank">👉 View Deal</a></p>  
+  <p>💰 AED 14.19 (price may vary)</p>  
+</div>  <script>  
+async function sendMessage(msg) {  
+  await fetch("https://script.google.com/macros/s/AKfycbxCI1clwJj_4A329u2BtLXc_QiQ7z33oQ08sMtQ7SvzxIZJH4olrDkGs5fi0fe4Dr1q/exec", {  
+    method: "POST",  
+    headers: {"Content-Type": "application/json"},  
+    body: JSON.stringify({message: msg})  
+  });  
+}  
+  
+// Example: Auto-send message when page loads  
+sendMessage("A visitor opened the Temu Deals page.");  
+</script>  </body>  
 </html>
