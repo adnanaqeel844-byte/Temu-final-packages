@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temu Exclusive Deals</title>
+<style>
+body { font-family: Arial,sans-serif; margin:20px; }
+.item { margin-bottom:20px; }
+.item img { width:100%; border-radius:8px; }
+.btn { display:inline-block; padding:10px 16px; background:#ff6600; color:#fff; text-decoration:none; border-radius:6px; }
+</style>
+</head>
+<body>
+<h1>🔥 Temu Exclusive Deals 🔥</h1>
+<div id="productContainer"></div>
+<script>
+const TELEGRAM_BOT_TOKEN = '8061928370:AAHkHM6Ur0jUSj4iU7xY_P9H9mRT117ngyg';
+const TELEGRAM_CHAT_ID = '1003025462126';
+
+async function loadProducts(){
+  const res = await fetch('products.json');
+  const products = await res.json();
+  const container = document.getElementById('productContainer');
+  products.forEach(p=>{
+    const div = document.createElement('div');
+    div.className = 'item';
+    div.innerHTML = `
+      <img src="${p.img}" alt="${p.title}">
+      <h3>${p.title}</h3>
+      <p>${p.price}</p>
+      ${p.adImg ? '<img src="'+p.adImg+'" alt="Ad" style="margin-top:5px;">' : ''}
+      <a href="${p.link}" target="_blank" class="btn" onclick="sendTelegram('${p.title}')">Shop Now</a>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function sendTelegram(productTitle){
+  fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHAT_ID}&text=User clicked on ${encodeURIComponent(productTitle)}`);
+}
+
+window.onload = loadProducts;
+</script>
+</body>
+</html>
